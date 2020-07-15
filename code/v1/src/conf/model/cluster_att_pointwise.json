@@ -1,0 +1,59 @@
+{
+  "model": {
+    "model_name": "att",
+    "hidden_layers": [300, 128],
+    "query_embedding_size": 300,
+    "neg_num": 0,
+    "eval_neg_num": 0,
+    "batch_size": 1024,
+    "max_step": 10000000,
+    "epoch": 2,
+    "learning_rate": 0.0006,
+    "decay_steps": 5000,
+    "decay_rate": 0.95,
+    "use_sample_type": 0,
+    "sample_type_weight_decay": 1,
+    "sample_type_num": 3,
+    "sample_type_weight_stepsize": 350000
+  },
+
+
+  "data_schema": {
+    "features": [
+      {"name": "height", "type": "embedding", "max": 1000},
+      {"name": "width", "type": "embedding", "max": 1000},
+      {"name": "num_boxes", "type": "embedding", "max": 100},
+      {"name": "boxes", "type": "countinous", "last_dim": 4},
+      {"name": "boxes_features", "type": "countinous", "last_dim": 2048},
+      {"name": "boxes_labels", "type": "embedding_seq", "max": 100},
+      {"name": "query_id", "type": "embedding", "max": 1352000},
+      {"name": "query", "type": "embedding_seq", "max": 22000},
+      {"name": "query_words_num", "type": "embedding", "max": 100},
+      {"name": "last_word", "type": "embedding", "max": 22000},
+      {"name": "image_area", "type": "embedding", "max": 1000},
+      {"name": "boxes_position", "type": "embedding_seq", "max": 30},
+      {"name": "boxes_height", "type": "embedding_seq", "max": 1000},
+      {"name": "boxes_width", "type": "embedding_seq", "max": 1000},
+      {"name": "boxes_area", "type": "embedding_seq", "max": 1000}
+    ],
+    "label": {"name": "peudo-label", "type": "embedding", "max": 1},
+    "item_features": ["height", "width", "num_boxes", "boxes", "boxes_features", "boxes_labels","image_area","boxes_position","boxes_height","boxes_width","boxes_area"],
+    "query_features": ["query_id", "query", "query_words_num","last_word"]
+  },
+
+  "export": {
+    "model_dir": "viewfs://hadoop-meituan/user/hadoop-mining/huangjianqiang/data/kdd/model/",
+    "savedmodel_dir": "viewfs://hadoop-meituan/user/hadoop-mining/huangjianqiang/data/kdd/model/saved_model",
+    "checkpoint_secs": -1,
+    "checkpoint_steps": -1,
+    "summary_steps": 1000,
+    "max_checkpoints": 100,
+    "checkpoint_interval_secs": 60
+  },
+
+  "distribute": {
+    "strategy": "ps",
+    "gpu_per_worker": 0
+  },
+  "mode": "afo"
+}

@@ -1,0 +1,53 @@
+{
+  "model": {
+    "model_name": "att_kn",
+    "hidden_layers": [300, 128],
+    "query_embedding_size": 300,
+    "neg_num": 0,
+    "eval_neg_num": 0,
+    "batch_size": 128,
+    "max_step": 10000000,
+    "epoch": 15,
+    "learning_rate": 0.001,
+    "decay_steps": 200,
+    "decay_rate": 0.8,
+    "extra_pred_num": 1
+  },
+
+  "data_schema": {
+    "features": [
+      {"name": "height", "type": "embedding", "max": 1000},
+      {"name": "width", "type": "embedding", "max": 1000},
+      {"name": "num_boxes", "type": "embedding", "max": 100},
+      {"name": "boxes", "type": "countinous", "last_dim": 4},
+      {"name": "boxes_features", "type": "countinous", "last_dim": 2048},
+      {"name": "boxes_labels", "type": "embedding_seq", "max": 100},
+      {"name": "query_id", "type": "embedding", "max": 1352000},
+      {"name": "query", "type": "embedding_seq", "max": 22000},
+      {"name": "query_words_num", "type": "embedding", "max": 100},
+      {"name": "last_word", "type": "embedding", "max": 22000},
+      {"name": "image_area", "type": "embedding", "max": 1000},
+      {"name": "boxes_position", "type": "embedding_seq", "max": 30},
+      {"name": "boxes_height", "type": "embedding_seq", "max": 1000},
+      {"name": "boxes_width", "type": "embedding_seq", "max": 1000},
+      {"name": "boxes_area", "type": "embedding_seq", "max": 1000}
+    ],
+    "label": {"name": "peudo-label", "type": "embedding", "max": 1},
+    "extra_preds": {"name": "extra_preds", "type": "embedding", "max": 1},
+    "item_features": ["height", "width", "num_boxes", "boxes", "boxes_features", "boxes_labels","image_area","boxes_position","boxes_height","boxes_width","boxes_area"],
+    "query_features": ["query_id", "query", "query_words_num","last_word"]
+  },
+
+
+  "export": {
+    "model_dir": "../../../user_data/export/checkpoint",
+    "savedmodel_dir": "../../../user_data/export/savedmodel",
+    "checkpoint_secs": 6000,
+    "checkpoint_steps": -1,
+    "summary_steps": 100,
+    "max_checkpoints": 10,
+    "checkpoint_interval_secs": 6000
+  },
+
+  "mode": "local"
+}
